@@ -1,0 +1,71 @@
+
+ BKBTC Error at 29/06/2021 16:56:16 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6A00>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6A00>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKBTC Error at 29/06/2021 16:56:16 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6F10>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6F10>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKBTC Error at 29/06/2021 16:56:16 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6250>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001BA9DCA6250>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKETH Error at 29/06/2021 16:56:16 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /trade/order (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000015F01F0F7F0>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /trade/order (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000015F01F0F7F0>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKETH Error at 30/06/2021 21:28:29 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 03/07/2021 03:59:37 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKBTC Error at 03/07/2021 05:58:05 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKETH Error at 03/07/2021 06:04:03 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKETH Error at 06/07/2021 01:57:07 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 08/07/2021 03:47:43 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKETH Error at 08/07/2021 03:56:54 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKETH Error at 08/07/2021 05:48:40 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKETH Error at 08/07/2021 07:29:11 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKBTC Error at 08/07/2021 13:15:55 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DAD99361C0>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DAD99361C0>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKETH Error at 08/07/2021 13:15:55 
+Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /trade/order (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000015F01F3D850>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /trade/order (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000015F01F3D850>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
+ BKBTC Error at 09/07/2021 05:28:36 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 09/07/2021 05:28:37 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 09/07/2021 14:03:56 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 09/07/2021 15:21:27 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 09/07/2021 15:23:45 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 09/07/2021 15:33:56 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 10/07/2021 02:24:23 
+Error:'client_access_token'('client_access_token',)
+ BKETH Error at 10/07/2021 03:12:56 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 11/07/2021 23:39:51 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 03:04:57 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 09:37:15 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 13:43:12 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 14:15:07 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 15:06:33 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 12/07/2021 21:05:11 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 13/07/2021 17:46:11 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 15/07/2021 04:55:46 
+Error:('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))(ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)),)
+ BKBTC Error at 19/07/2021 00:17:14 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 19/07/2021 16:53:48 
+Error:'client_access_token'('client_access_token',)
+ BKBTC Error at 19/07/2021 19:06:01 
+Error:'client_access_token'('client_access_token',)
