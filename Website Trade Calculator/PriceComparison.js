@@ -1,3 +1,4 @@
+
 //blockkoins variables
 
 var BKBKBTCAsk
@@ -109,8 +110,6 @@ var requestOptions = {
         VALRETHZARAsk = parsedResponse.askPrice;
         VALRETHZARBid = parsedResponse.bidPrice;
         console.log('VALR ETH ',VALRETHZARAsk, VALRETHZARBid)
-        outputValrPairs(VALRETHZARAsk, VALRETHZARBid)
-
         //calculations
         var finalcustomerETHValr = ((VALRETHZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
         return finalcustomerETHValr;
@@ -130,7 +129,6 @@ var requestOptions = {
         VALRXRPZARAsk = parsedResponse.askPrice;
         VALRXRPZARBid = parsedResponse.bidPrice;
         console.log('VALR XRP ',VALRXRPZARAsk, VALRXRPZARBid)
-        outputValrPairs(VALRXRPZARAsk, VALRXRPZARBid)
         //calculations
         var finalcustomerXRPValr = ((VALRXRPZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
         return finalcustomerXRPValr;
@@ -152,7 +150,7 @@ var requestOptions = {
       var parsedShiftResponse = JSON.parse(result);
       for (var x in parsedShiftResponse) {
         if(parsedShiftResponse[x].pair == 'BKUSD'){
-          BKBKUSDAsk = parsedShiftResponse[x].ask;
+          globalThis.BKBKUSDAsk = parsedShiftResponse[x].ask;
           BKBKUSDBid = parsedShiftResponse[x].bid;
         
         } 
@@ -171,7 +169,7 @@ var requestOptions = {
         }
       }
    
-      console.log('\nBKUSD ',BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
+      console.log('\nBKUSD ',globalThis.BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
   
       //now to get the USD transaction price
       fetch("https://v6.exchangerate-api.com/v6/016cf99ebf10c90a2ca3333d/latest/USD", requestOptions)
@@ -187,7 +185,7 @@ var requestOptions = {
         console.log('Conversion Rate ', USDZAR);
   
         var customerUSD = customerZAR*USDZAR;
-        var BK = customerUSD/BKBKUSD;
+        var BK = customerUSD/globalThis.BKBKUSDAsk;
   
         console.log((BKBKBTCBid*BK),'BTC from Blockkoin');
         console.log((BKBKETHBid*BK),'ETH from Blockkoin');
@@ -267,23 +265,6 @@ function getLunoXRPZAR(){
       return finalcustomerXRPLuno;
   }
   return getResponseLunoXRPZAR(globalThis.LunoXRPZARResult);
-}
-
-
-//calculation
-
-
-//sorts out straight forward pairs
-function outputLunoPairs(LunoBid, LunoAsk){
-  console.log((LunoBid/customerZAR),'Bid from Luno');
-  console.log((LunoAsk/customerZAR),'Ask from Luno');
-  //console.log((LunoXRPZAR/customerZAR),'XRP from Luno');
-}
-
-function outputValrPairs(ValrAsk, ValrBid){
-  
-  console.log((ValrBid/customerZAR),'Bid from VALR');
-  console.log((ValrAsk/customerZAR),'Ask from VALR'); 
 }
 
 
