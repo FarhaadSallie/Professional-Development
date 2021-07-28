@@ -1,6 +1,4 @@
 //blockkoins variables
-var BKBTCZARAsk
-var BKBTCZARBid
 
 var BKBKBTCAsk
 var BKBKBTCBid
@@ -43,7 +41,7 @@ var ZARUSD
 //deposit fees
 var lunoDepositFees =0.02
 var valrDepositFees = 0
-var BKDepositFees = 0
+var BKDepositFees = 0.04
 
 //transaction fees
 
@@ -55,8 +53,7 @@ var BKTransactionFees = 0
 
 var lunoWithdrawFees = 0.02
 var valrWithdrawFees = 0.02 
-var BKWithdrawFees = 0
-
+var BKWithdrawFees = 0.03
 
 // calculation variables
 
@@ -75,16 +72,18 @@ var requestOptions = {
     redirect: 'follow'
  };
 
-
   //VALR working
 
-  fetch("https://api.valr.com/v1/public/BTCZAR/marketsummary", requestOptions)
-  .then(response => response.text())
-  .then(result => {getResponseValrBTCZAR(result), testResult = result})
-  .catch(error => console.log('error', error));
-  console.log("result", testResult);
-  function getResponseValrBTCZAR(result){
+  function getValrBTCZAR(){
+    var result1;
+    fetch("https://api.valr.com/v1/public/BTCZAR/marketsummary", requestOptions)
+    .then(response => response.text())
+    .then(result => getResponseValrBTCZAR(result))
+    .catch(error => console.log('error', error));
     
+    var ValrBTCZARResult;
+    function getResponseValrBTCZAR(result){
+      globalThis.ValrBTCZARResult = result;
       var parsedResponse = JSON.parse(result);
       VALRBTCZARAsk = parsedResponse.askPrice;
       VALRBTCZARBid = parsedResponse.bidPrice;
@@ -92,120 +91,131 @@ var requestOptions = {
        
       //calculations
       var finalcustomerBTCValr = ((VALRBTCZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
-
+      return finalcustomerBTCValr;
+    }
+    return getResponseValrBTCZAR(globalThis.ValrBTCZARResult);
   }
   
-  fetch("https://api.valr.com/v1/public/ETHZAR/marketsummary", requestOptions)
-    .then(response => response.text())
-    .then(result => getResponseValrETHZAR(result))
-    .catch(error => console.log('error', error));
 
-  function getResponseValrETHZAR(result){//
-      var parsedResponse = JSON.parse(result);
-      VALRETHZARAsk = parsedResponse.askPrice;
-      VALRETHZARBid = parsedResponse.bidPrice;
-      console.log('VALR ETH ',VALRETHZARAsk, VALRETHZARBid)
-      outputValrPairs(VALRETHZARAsk, VALRETHZARBid)
+  function getValrETHZAR(){
+    fetch("https://api.valr.com/v1/public/ETHZAR/marketsummary", requestOptions)
+      .then(response => response.text())
+      .then(result => getResponseValrETHZAR(result))
+      .catch(error => console.log('error', error));
 
-      //calculations
-      var finalcustomerETHValr = ((VALRETHZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
+    function getResponseValrETHZAR(result){//
+        globalThis.ValrETHZARResult = result;
+        var parsedResponse = JSON.parse(result);
+        VALRETHZARAsk = parsedResponse.askPrice;
+        VALRETHZARBid = parsedResponse.bidPrice;
+        console.log('VALR ETH ',VALRETHZARAsk, VALRETHZARBid)
+        outputValrPairs(VALRETHZARAsk, VALRETHZARBid)
+
+        //calculations
+        var finalcustomerETHValr = ((VALRETHZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
+        return finalcustomerETHValr;
+      }
+      return getResponseValrETHZAR(globalThis.ValrETHZARResult);
     }
 
-
-  fetch("https://api.valr.com/v1/public/XRPZAR/marketsummary", requestOptions)
+  function getValrXRPZAR(){
+    fetch("https://api.valr.com/v1/public/XRPZAR/marketsummary", requestOptions)
     .then(response => response.text())
     .then(result => getResponseValrXRPZAR(result))
     .catch(error => console.log('error', error));
 
-  function getResponseValrXRPZAR(result){
-      var parsedResponse = JSON.parse(result);
-      VALRXRPZARAsk = parsedResponse.askPrice;
-      VALRXRPZARBid = parsedResponse.bidPrice;
-      console.log('VALR XRP ',VALRXRPZARAsk, VALRXRPZARBid)
-      outputValrPairs(VALRXRPZARAsk, VALRXRPZARBid)
-      //calculations
-      var finalcustomerXRPValr = ((VALRXRPZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
+    function getResponseValrXRPZAR(result){
+        globalThis.ValrXRPZARResult = result;
+        var parsedResponse = JSON.parse(result);
+        VALRXRPZARAsk = parsedResponse.askPrice;
+        VALRXRPZARBid = parsedResponse.bidPrice;
+        console.log('VALR XRP ',VALRXRPZARAsk, VALRXRPZARBid)
+        outputValrPairs(VALRXRPZARAsk, VALRXRPZARBid)
+        //calculations
+        var finalcustomerXRPValr = ((VALRXRPZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
+        return finalcustomerXRPValr;
+    }
+    return getResponseValrXRPZAR(globalThis.ValrXRPZARResult);
   }
   
-  
-  
-
 //Blockkoin working
 
-
-  fetch("https://api.cryptosrvc.com/exchange/quotes?exchange=BLOCKKOIN", requestOptions)
-  .then(response => response.text())
-  .then(result => calculateBKPairs(result))
-  .catch(error => console.log('error', error));
-
-
-  function calculateBKPairs(result){
-    
-    var parsedShiftResponse = JSON.parse(result);
-    for (var x in parsedShiftResponse) {
-      if(parsedShiftResponse[x].pair == 'BKUSD'){
-        BKBKUSDAsk = parsedShiftResponse[x].ask;
-        BKBKUSDBid = parsedShiftResponse[x].bid;
-      
-      } 
-
-    if(parsedShiftResponse[x].pair == 'BKBTC'){
-        BKBKBTCAsk = parsedShiftResponse[x].ask;
-        BKBKBTCBid = parsedShiftResponse[x].bid;
-      } 
-    if(parsedShiftResponse[x].pair == 'BKETH'){
-        BKBKETHAsk = parsedShiftResponse[x].ask;
-        BKBKETHBid = parsedShiftResponse[x].bid;
-      }
-      if(parsedShiftResponse[x].pair == 'BKXRP'){
-        BKBKXRPAsk = parsedShiftResponse[x].ask;
-        BKBKXRPBid = parsedShiftResponse[x].bid;
-      }
-    }
- 
-    console.log('\nBKUSD ',BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
-
-    //now to get the USD transaction price
-    fetch("https://v6.exchangerate-api.com/v6/016cf99ebf10c90a2ca3333d/latest/USD", requestOptions)
+  function getBKPairs(){
+    fetch("https://api.cryptosrvc.com/exchange/quotes?exchange=BLOCKKOIN", requestOptions)
     .then(response => response.text())
-    .then(result => getResponseR1(result))
+    .then(result => calculateBKPairs(result))
     .catch(error => console.log('error', error));
+  
+  
+    function calculateBKPairs(result){
+      
+      var parsedShiftResponse = JSON.parse(result);
+      for (var x in parsedShiftResponse) {
+        if(parsedShiftResponse[x].pair == 'BKUSD'){
+          BKBKUSDAsk = parsedShiftResponse[x].ask;
+          BKBKUSDBid = parsedShiftResponse[x].bid;
+        
+        } 
+  
+      if(parsedShiftResponse[x].pair == 'BKBTC'){
+          BKBKBTCAsk = parsedShiftResponse[x].ask;
+          BKBKBTCBid = parsedShiftResponse[x].bid;
+        } 
+      if(parsedShiftResponse[x].pair == 'BKETH'){
+          BKBKETHAsk = parsedShiftResponse[x].ask;
+          BKBKETHBid = parsedShiftResponse[x].bid;
+        }
+        if(parsedShiftResponse[x].pair == 'BKXRP'){
+          BKBKXRPAsk = parsedShiftResponse[x].ask;
+          BKBKXRPBid = parsedShiftResponse[x].bid;
+        }
+      }
+   
+      console.log('\nBKUSD ',BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
+  
+      //now to get the USD transaction price
+      fetch("https://v6.exchangerate-api.com/v6/016cf99ebf10c90a2ca3333d/latest/USD", requestOptions)
+      .then(response => response.text())
+      .then(result => getResponseR1(result))
+      .catch(error => console.log('error', error));
+  
+    function getResponseR1(result){
+        var parsedResponse = JSON.parse(result);
+        var conversionrates = parsedResponse.conversion_rates;
+        ZARUSD = conversionrates.ZAR;
+        USDZAR = 1/ZARUSD;
+        console.log('Conversion Rate ', USDZAR);
+  
+        var customerUSD = customerZAR*USDZAR;
+        var BK = customerUSD/BKBKUSD;
+  
+        console.log((BKBKBTCBid*BK),'BTC from Blockkoin');
+        console.log((BKBKETHBid*BK),'ETH from Blockkoin');
+        console.log((BKBKXRPBid*BK),'XRP from Blockkoin');
+  
+        //calculations 
+        var finalcustomerZARBlockkoin = customerZAR*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees)); //if we need the ammount of ZAR post processes
+  
+        var finalcustomerBTCBlockkoin = (BKBKBTCAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
+        var finalcustomerETHBlockkoin = (BKBKETHAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
+        var finalcustomerXRPBlockkoin = (BKBKXRPAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
 
-  function getResponseR1(result){
-      var parsedResponse = JSON.parse(result);
-      var conversionrates = parsedResponse.conversion_rates;
-      ZARUSD = conversionrates.ZAR;
-      USDZAR = 1/ZARUSD;
-      console.log('Conversion Rate ', USDZAR);
-
-      var customerUSD = customerZAR*USDZAR;
-      var BK = customerUSD/BKBKUSD;
-
-      console.log((BKBKBTCBid*BK),'BTC from Blockkoin');
-      console.log((BKBKETHBid*BK),'ETH from Blockkoin');
-      console.log((BKBKXRPBid*BK),'XRP from Blockkoin');
-
-      //calculations 
-      var finalcustomerZARBlockkoin = customerZAR*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees)); //if we need the ammount of ZAR post processes
-
-      var finalcustomerBTCBlockkoin = (BKBKBTCAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
-      var finalcustomerETHBlockkoin = (BKBKETHAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
-      var finalcustomerXRPBlockkoin = (BKBKXRPAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
-  }
+        console.log(finalcustomerZARBlockkoin, finalcustomerBTCBlockkoin, finalcustomerETHBlockkoin, finalcustomerXRPBlockkoin)
+    }
+    }
   }
   
   
+  //Luno working
 
-
-
-//Luno working
-
+function getLunoBTCZAR(){
   fetch("https://api.luno.com/api/1/ticker?pair=XBTZAR", requestOptions)
   .then(response => response.text())
   .then(result => getResponseLunoBTCZAR(result))
   .catch(error => console.log('error', error));
-
+  
   function getResponseLunoBTCZAR(result){
+      globalThis.LunoBTCZARResult = result;
       var parsedResponse = JSON.parse(result);
       LunoBTCZARAsk = parsedResponse.ask;
       LunoBTCZARBid = parsedResponse.bid;
@@ -214,29 +224,39 @@ var requestOptions = {
       //calculation
 
       var finalcustomerBTCLuno = ((LunoBTCZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)));
+      return finalcustomerBTCLuno;
   }
-
+      return getResponseLunoBTCZAR(globalThis.LunoBTCZARResult);
+}
+  
+function getLunoETHZAR(){
   fetch("https://api.luno.com/api/1/ticker?pair=ETHZAR", requestOptions)
-    .then(response => response.text())
-    .then(result => getResponseLunoETHZAR(result))
-    .catch(error => console.log('error', error));
+  .then(response => response.text())
+  .then(result => getResponseLunoETHZAR(result))
+  .catch(error => console.log('error', error));
 
   function getResponseLunoETHZAR(result){
-      var parsedResponse = JSON.parse(result);
-      LunoETHZARAsk = parsedResponse.ask;
-      LunoETHZARBid = parsedResponse.bid;
-      console.log('Luno : ETH ',LunoETHZARAsk, LunoETHZARBid)
+    globalThis.LunoETHZARResult = result;
+    var parsedResponse = JSON.parse(result);
+    LunoETHZARAsk = parsedResponse.ask;
+    LunoETHZARBid = parsedResponse.bid;
+    console.log('Luno : ETH ',LunoETHZARAsk, LunoETHZARBid)
 
-      //calculation
-      var finalcustomerETHLuno = ((LunoETHZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)))
+    //calculation
+    var finalcustomerETHLuno = ((LunoETHZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)));
+    return finalcustomerETHLuno;
   }
-
+  return getResponseLunoETHZAR(globalThis.LunoETHZARResult);
+}
+  
+function getLunoXRPZAR(){
   fetch("https://api.luno.com/api/1/ticker?pair=XRPZAR", requestOptions)
     .then(response => response.text())
     .then(result => getResponseLunoXRPZAR(result))
     .catch(error => console.log('error', error));
 
   function getResponseLunoXRPZAR(result){
+    globalThis.LunoXRPZARResult = result;
       var parsedResponse = JSON.parse(result);
       LunoXRPZARAsk = parsedResponse.ask;
       LunoXRPZARBid = parsedResponse.bid;
@@ -244,8 +264,10 @@ var requestOptions = {
 
       //calculation
       var finalcustomerXRPLuno = ((LunoXRPZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)))
+      return finalcustomerXRPLuno;
   }
- 
+  return getResponseLunoXRPZAR(globalThis.LunoXRPZARResult);
+}
 
 
 //calculation
@@ -267,4 +289,4 @@ function outputValrPairs(ValrAsk, ValrBid){
 
 //now for BK
 
-//getBKPairs();
+getBKPairs();
