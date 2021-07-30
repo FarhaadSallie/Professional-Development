@@ -1,5 +1,8 @@
+//Farhaad Sallie 18/07/2021
 
-//blockkoins variables
+//Global Variables used to take in the bid ask prices for each pair from the various exchange APIs 
+
+//blockkoins exchange variables
 
 var BKBKBTCAsk
 var BKBKBTCBid
@@ -38,6 +41,7 @@ var LunoXRPZARBid
 var USDZAR
 var ZARUSD 
 
+//The deposit,transaction and withdrawal fees for each exchange
 
 //deposit fees
 var lunoDepositFees =0.02
@@ -56,11 +60,15 @@ var lunoWithdrawFees = 0.02
 var valrWithdrawFees = 0.02 
 var BKWithdrawFees = 0.03
 
-// calculation variables
+// The amount of money in ZAR the customer would like to put into the exchange
 
-var customerZAR = 100000;
+var customerZAR = 1000000;
+
+//The number of trades the customer is planning to make on the exchange
+
 var customerTrades = 2;
 
+//The type of request that are going to be made by fetch aswell as what type of content is expected back
 
 var requestOptions = {
     method: 'GET',
@@ -73,26 +81,36 @@ var requestOptions = {
     redirect: 'follow'
  };
 
-  //VALR working
+  //Fetch requests and parsing of data for the VALR Exchange
 
   function getValrBTCZAR(){
-    var result1;
+    
+    //fetch request from VALRs Exchange
     fetch("https://api.valr.com/v1/public/BTCZAR/marketsummary", requestOptions)
     .then(response => response.text())
     .then(result => getResponseValrBTCZAR(result))
     .catch(error => console.log('error', error));
     
-    var ValrBTCZARResult;
+    //Parsing the retrieved result 
     function getResponseValrBTCZAR(result){
+      //Using an ES2020 method to set the result as a global variable in order to be referenced outside the function
       globalThis.ValrBTCZARResult = result;
+      //parsing the retrieved response in a JSON format
       var parsedResponse = JSON.parse(result);
+      //retrieving the ask and bid price for the pair 
       VALRBTCZARAsk = parsedResponse.askPrice;
       VALRBTCZARBid = parsedResponse.bidPrice;
-      console.log('VALR: BTC',VALRBTCZARAsk, VALRBTCZARBid);
+
+     
        
-      //calculations
+      //calculating how much BTC the customer gets after their journey through the exchange   
       var finalcustomerBTCValr = ((VALRBTCZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
-      return finalcustomerBTCValr;
+      
+      //calculating the amount of coin the customer gets after coming into the exchange
+      var customerZARAfterDeposit = customerZAR*(1-valrDepositFees);
+      var noOfBTCCoins = (customerZARAfterDeposit/VALRBTCZARBid);
+    
+      return noOfBTCCoins;
     }
     return getResponseValrBTCZAR(globalThis.ValrBTCZARResult);
   }
@@ -104,15 +122,18 @@ var requestOptions = {
       .then(result => getResponseValrETHZAR(result))
       .catch(error => console.log('error', error));
 
-    function getResponseValrETHZAR(result){//
+    function getResponseValrETHZAR(result){
         globalThis.ValrETHZARResult = result;
         var parsedResponse = JSON.parse(result);
         VALRETHZARAsk = parsedResponse.askPrice;
         VALRETHZARBid = parsedResponse.bidPrice;
-        console.log('VALR ETH ',VALRETHZARAsk, VALRETHZARBid)
+        
         //calculations
         var finalcustomerETHValr = ((VALRETHZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
-        return finalcustomerETHValr;
+
+        var customerZARAfterDeposit = customerZAR*(1-valrDepositFees); 
+        var noOfETHCoins = (customerZARAfterDeposit/VALRETHZARBid);
+        return noOfETHCoins;
       }
       return getResponseValrETHZAR(globalThis.ValrETHZARResult);
     }
@@ -128,10 +149,12 @@ var requestOptions = {
         var parsedResponse = JSON.parse(result);
         VALRXRPZARAsk = parsedResponse.askPrice;
         VALRXRPZARBid = parsedResponse.bidPrice;
-        console.log('VALR XRP ',VALRXRPZARAsk, VALRXRPZARBid)
         //calculations
         var finalcustomerXRPValr = ((VALRXRPZARAsk/customerZAR)*(1-(valrDepositFees+(customerTrades*valrTransactionFees)+valrWithdrawFees)));
-        return finalcustomerXRPValr;
+
+        var customerZARAfterDeposit = customerZAR*(1-valrDepositFees);
+        var noOfXRPCoins = (customerZARAfterDeposit/VALRXRPZARBid);
+        return noOfXRPCoins;
     }
     return getResponseValrXRPZAR(globalThis.ValrXRPZARResult);
   }
@@ -146,7 +169,7 @@ var requestOptions = {
   
   
     function calculateBKPairs(result){
-      
+      globalThis.calcBKPairsResult = result;
       var parsedShiftResponse = JSON.parse(result);
       for (var x in parsedShiftResponse) {
         if(parsedShiftResponse[x].pair == 'BKUSD'){
@@ -157,19 +180,19 @@ var requestOptions = {
   
       if(parsedShiftResponse[x].pair == 'BKBTC'){
           BKBKBTCAsk = parsedShiftResponse[x].ask;
-          BKBKBTCBid = parsedShiftResponse[x].bid;
+          globalThis.BKBKBTCBid = parsedShiftResponse[x].bid;
         } 
       if(parsedShiftResponse[x].pair == 'BKETH'){
           BKBKETHAsk = parsedShiftResponse[x].ask;
-          BKBKETHBid = parsedShiftResponse[x].bid;
+          globalThis.BKBKETHBid = parsedShiftResponse[x].bid;
         }
         if(parsedShiftResponse[x].pair == 'BKXRP'){
           BKBKXRPAsk = parsedShiftResponse[x].ask;
-          BKBKXRPBid = parsedShiftResponse[x].bid;
+          globalThis.BKBKXRPBid = parsedShiftResponse[x].bid;
         }
       }
    
-      console.log('\nBKUSD ',globalThis.BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
+      //console.log('\nBKUSD ',globalThis.BKBKUSDAsk, BKBKUSDBid,'BTC ',BKBKBTCAsk, BKBKBTCBid,'ETH ',BKBKETHAsk,BKBKETHBid,'XRP ',BKBKXRPAsk,BKBKXRPBid);
   
       //now to get the USD transaction price
       fetch("https://v6.exchangerate-api.com/v6/016cf99ebf10c90a2ca3333d/latest/USD", requestOptions)
@@ -178,6 +201,7 @@ var requestOptions = {
       .catch(error => console.log('error', error));
   
     function getResponseR1(result){
+        globalThis.R1Result = result;
         var parsedResponse = JSON.parse(result);
         var conversionrates = parsedResponse.conversion_rates;
         ZARUSD = conversionrates.ZAR;
@@ -187,20 +211,35 @@ var requestOptions = {
         var customerUSD = customerZAR*USDZAR;
         var BK = customerUSD/globalThis.BKBKUSDAsk;
   
-        console.log((BKBKBTCBid*BK),'BTC from Blockkoin');
-        console.log((BKBKETHBid*BK),'ETH from Blockkoin');
-        console.log((BKBKXRPBid*BK),'XRP from Blockkoin');
+        //console.log((BKBKBTCBid*BK),'BTC from Blockkoin');
+        //console.log((BKBKETHBid*BK),'ETH from Blockkoin');
+        //console.log((BKBKXRPBid*BK),'XRP from Blockkoin');
   
         //calculations 
-        var finalcustomerZARBlockkoin = customerZAR*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees)); //if we need the ammount of ZAR post processes
+        var finalcustomerZARBlockkoin = customerZAR*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees)); //if we need the amount of ZAR post processes
   
         var finalcustomerBTCBlockkoin = (BKBKBTCAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
         var finalcustomerETHBlockkoin = (BKBKETHAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
         var finalcustomerXRPBlockkoin = (BKBKXRPAsk*BK)*(1-(BKDepositFees+(customerTrades*BKTransactionFees)+BKWithdrawFees));
 
-        console.log(finalcustomerZARBlockkoin, finalcustomerBTCBlockkoin, finalcustomerETHBlockkoin, finalcustomerXRPBlockkoin)
+        //console.log(finalcustomerZARBlockkoin, finalcustomerBTCBlockkoin, finalcustomerETHBlockkoin, finalcustomerXRPBlockkoin)
+        var customerZARAfterDeposit = customerZAR*(1-BKDepositFees);
+        var customerUSDAfterDeposit = customerZARAfterDeposit*USDZAR;
+        var BKAfterDeposit = customerUSDAfterDeposit/globalThis.BKBKUSDAsk;
+
+        var noOfBTCCoins = (BKAfterDeposit*globalThis.BKBKBTCBid);
+        //console.log('BTC Coins',noOfBTCCoins);
+        var noOfETHCoins = (BKAfterDeposit*globalThis.BKBKETHBid);
+        //console.log('ETH Coins',noOfETHCoins);
+        var noOfXRPCoins = (BKAfterDeposit*globalThis.BKBKXRPBid);
+        //console.log('XRP Coins',noOfXRPCoins);
+
+        var bkkoins = [noOfBTCCoins, noOfETHCoins, noOfXRPCoins]
+        return bkkoins;
+      }
+      return getResponseR1(globalThis.R1Result);
     }
-    }
+    return calculateBKPairs(globalThis.calcBKPairsResult);
   }
   
   
@@ -212,17 +251,21 @@ function getLunoBTCZAR(){
   .then(result => getResponseLunoBTCZAR(result))
   .catch(error => console.log('error', error));
   
+
   function getResponseLunoBTCZAR(result){
       globalThis.LunoBTCZARResult = result;
       var parsedResponse = JSON.parse(result);
       LunoBTCZARAsk = parsedResponse.ask;
       LunoBTCZARBid = parsedResponse.bid;
-      console.log('\nLuno : BTC ',LunoBTCZARAsk, LunoBTCZARBid)
 
       //calculation
 
       var finalcustomerBTCLuno = ((LunoBTCZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)));
-      return finalcustomerBTCLuno;
+
+      var customerZARAfterDeposit = customerZAR*(1-lunoDepositFees);
+      var noOfBTCCoins = (customerZARAfterDeposit/LunoBTCZARBid);
+
+      return noOfBTCCoins;
   }
       return getResponseLunoBTCZAR(globalThis.LunoBTCZARResult);
 }
@@ -238,11 +281,14 @@ function getLunoETHZAR(){
     var parsedResponse = JSON.parse(result);
     LunoETHZARAsk = parsedResponse.ask;
     LunoETHZARBid = parsedResponse.bid;
-    console.log('Luno : ETH ',LunoETHZARAsk, LunoETHZARBid)
 
     //calculation
     var finalcustomerETHLuno = ((LunoETHZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)));
-    return finalcustomerETHLuno;
+
+    var customerZARAfterDeposit = customerZAR*(1-lunoDepositFees);
+    var noOfETHCoins = (customerZARAfterDeposit/LunoETHZARBid);
+
+    return noOfETHCoins;
   }
   return getResponseLunoETHZAR(globalThis.LunoETHZARResult);
 }
@@ -258,16 +304,34 @@ function getLunoXRPZAR(){
       var parsedResponse = JSON.parse(result);
       LunoXRPZARAsk = parsedResponse.ask;
       LunoXRPZARBid = parsedResponse.bid;
-      console.log('Luno : XRP ',LunoXRPZARAsk, LunoXRPZARBid)
-
       //calculation
       var finalcustomerXRPLuno = ((LunoXRPZARAsk/customerZAR)*(1-(lunoDepositFees+(customerTrades*lunoTransactionFees)+lunoWithdrawFees)))
-      return finalcustomerXRPLuno;
+
+      var customerZARAfterDeposit = customerZAR*(1-lunoDepositFees);
+      var noOfXRPCoins = (customerZARAfterDeposit/LunoXRPZARBid);
+
+      return noOfXRPCoins;
   }
   return getResponseLunoXRPZAR(globalThis.LunoXRPZARResult);
 }
 
+var test = getValrBTCZAR();
+console.log('VALRBTC',test);
 
-//now for BK
+var test1 = getValrETHZAR();
+console.log('VALRETH',test1);
 
-getBKPairs();
+var test2 = getValrXRPZAR();
+console.log('VALRXRP',test2);
+
+var test3 = getLunoBTCZAR();
+console.log('LunoBTC',test3);
+
+var test4 = getLunoETHZAR();
+console.log('LunoETH',test4);
+
+var test5 = getLunoXRPZAR();
+console.log('LunoXRP',test5);
+
+var test6 = getBKPairs();
+console.log('BkBTC',test6[0],'BkETH',test6[1],'BkXRP',test6[2]);
