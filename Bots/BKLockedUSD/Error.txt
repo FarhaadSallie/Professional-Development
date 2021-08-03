@@ -1,9 +1,0 @@
-
- BKLockedUSD Error at 29/06/2021 16:56:16 
-Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DD9B59EB80>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DD9B59EB80>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
- BKLockedUSD Error at 29/06/2021 16:56:16 
-Error:HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DD9B59E820>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))(MaxRetryError("HTTPSConnectionPool(host='api.cryptosrvc.com', port=443): Max retries exceeded with url: /authentication/user_authentication/exchangeToken (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x000001DD9B59E820>: Failed to establish a new connection: [Errno 11001] getaddrinfo failed'))"),)
- BKLockedUSD Error at 30/06/2021 10:11:00 
-Error:'client_access_token'('client_access_token',)
- BKLockedUSD Error at 30/06/2021 21:28:30 
-Error:'client_access_token'('client_access_token',)
