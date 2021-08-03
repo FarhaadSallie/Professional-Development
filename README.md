@@ -1,2 +1,2 @@
 # BK-Development
-My personal development repository for Blockkoin
+My personal development repository for sanitised work projects.
